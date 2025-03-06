@@ -1,5 +1,5 @@
 export const createNewPost = async (submissionObject) => {
-    const response = await fetch("http://localhost:8088/new_post", {
+    const response = await fetch("http://localhost:8088/posts", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
