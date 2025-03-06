@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react"
+import { NewTagForm } from "./NewTag"
 
 export const AllTags = () => {
     const [allTags, setAllTags] = useState([])
     const [error, setError] = useState(null)
 
-    useEffect(()=> {
+    const setAndFetchTags = () => {
         fetch("http://localhost:8088/tags")
             .then(response => response.json())
-            .then(data => setAllTags(data))
-            .catch(error => console.error("Error with fetching tags", error))
+            .then(data => {setAllTags(data)})
+        // .catch(error => console.error("Error with fetching tags", error)) 
+    }
+    
+    useEffect(()=> {
+       setAndFetchTags()
     }, [])
 
+
     return (
+        <>
         <section>
             <h1>All Tags</h1>
             {allTags.map((tag) => {
@@ -24,5 +31,9 @@ export const AllTags = () => {
                 </section>
             })}
         </section>
+        <section>
+            <NewTagForm  setAndFetchTags={setAndFetchTags}/>
+        </section>
+        </>
     )
 }
