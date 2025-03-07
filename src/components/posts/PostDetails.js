@@ -28,12 +28,24 @@ export const PostDetails = () => {
     }, [postId])
 
     return (
-        <section class="card m-2 p-2">
-            <h1 class="title is-4 has-text-centered">{post?.title}</h1>
-            <div>Author: {post?.first_name} {post?.last_name}</div>
-            <div>Category: {post?.category_label}</div>
-            <div>Publication Date: {post?.publication_date}</div>
-            <div class="">{post?.content}</div>
+        <section class="card m-2 p-2 columns">
+            <div className="column">
+                <h1 class="title is-4">{post?.title}</h1>
+            <div className="card-image">
+                <figure class="image-is4by3">
+                   <img
+                   src="https://bulma.io/assets/images/placeholders/1280x960.png"
+                   alt="Placeholder img"
+                   /> 
+                </figure>
+            </div>
+                <div class="m-2 columns">
+                    <div className="column">Author: {post?.first_name} {post?.last_name}</div>
+                    <div className="column"> Date:{post?.publication_date}</div>
+                </div>
+                <div className="m-4">{post?.content}</div>
+            </div>
+                <div class="">Category: {post?.category_label}</div>    
         </section>
     )
 }

@@ -58,6 +58,14 @@ export const NewPost = ({ token }) => {
                         required />
                 </fieldset>
                 <fieldset className="m-2">
+                    <label className="label">Image URL: </label>
+                    <input 
+                        type="text"
+                        placeholder="Enter URL..."
+                        name="imageURL"
+                        disabled />
+                </fieldset>
+                <fieldset className="m-2">
                     <label className="label">Post: </label>
                     <textarea
                         type="text"

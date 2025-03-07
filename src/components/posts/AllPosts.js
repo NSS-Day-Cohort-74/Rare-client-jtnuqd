@@ -17,6 +17,8 @@ export const AllPosts = () => {
     return (
         <section>
             <h1 class="title is-3 has-text-centered">All Posts</h1>
+            <div className="table-container">
+            <table className="table">
             {allPosts.map((post) => {
                return <section key={post.id} class=" card m-3 p-3">
                     <Link to={`/posts/${post.id}`}><header>{post.title}</header></Link>
@@ -24,6 +26,8 @@ export const AllPosts = () => {
                     <div>Category: {post.category_label}</div>
                 </section>
             })}
+            </table>
+            </div>
         </section>
     )
 }
