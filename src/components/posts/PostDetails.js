@@ -28,12 +28,12 @@ export const PostDetails = () => {
     }, [postId])
 
     return (
-        <section>
-            <h1>{post?.title}</h1>
+        <section class="card m-2 p-2">
+            <h1 class="title is-4 has-text-centered">{post?.title}</h1>
             <div>Author: {post?.first_name} {post?.last_name}</div>
             <div>Category: {post?.category_label}</div>
             <div>Publication Date: {post?.publication_date}</div>
-            <div>{post?.content}</div>
+            <div class="">{post?.content}</div>
         </section>
     )
 }

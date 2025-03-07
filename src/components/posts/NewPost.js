@@ -45,28 +45,31 @@ export const NewPost = ({ token }) => {
     
     return (
         <section>
-            <h1>New Post</h1>
-            <form>
-                <fieldset>
-                    <label>Title: </label>
+            <h1 className="title is-3 has-text-centered">New Post</h1>
+            <form className="field card m-4 p-4">
+                <fieldset className="m-2">
+                    <label className="label">Title: </label>
                     <input 
                         type="text"
+                        placeholder="Enter title..."
                         name="title"
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}
                         required />
                 </fieldset>
-                <fieldset>
-                    <label>Post: </label>
-                    <input
+                <fieldset className="m-2">
+                    <label className="label">Post: </label>
+                    <textarea
                         type="text"
+                        className="textarea"
+                        placeholder="Enter post body..."
                         name="content"
                         value={content}
                         onChange={(event) => setContent(event.target.value)}
                         required />
                 </fieldset>
-                <fieldset>
-                    <label>Category: </label>
+                <fieldset className="m-2">
+                    <label className="label">Category: </label>
                     <select
                         value={selectedCategory}
                         onChange={(event) => setSelectedCategory(event.target.value)}>
@@ -76,7 +79,7 @@ export const NewPost = ({ token }) => {
                             })}
                     </select>
                 </fieldset>
-                <button type="submit" onClick={handleSavePost} >Submit Post</button>
+                <button type="submit" className="button is-success m-2" onClick={handleSavePost} >Submit Post</button>
             </form>
         </section>
     )

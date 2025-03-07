@@ -18,22 +18,22 @@ export const AllTags = () => {
 
 
     return (
-        <>
-        <section>
-            <h1>All Tags</h1>
+        <div class="columns">
+        <section class="column card m-2">
+            <h1 class="title is-3 has-text-centered">All Tags</h1>
             {allTags.map((tag) => {
-               return <section key={tag.id}>
+               return <section key={tag.id} class="m-3 card p-2">
                     <header>Tag: {tag.label}</header>
-                    <div>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                    <div class="buttons are-small"> 
+                        <button class="button is-info m-1">Edit</button>
+                        <button class="button is-danger m-1">Delete</button>
                     </div>
                 </section>
             })}
         </section>
-        <section>
+        <section class="column">
             <NewTagForm  setAndFetchTags={setAndFetchTags}/>
         </section>
-        </>
+        </div>
     )
 }
