@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react"
 
-export const MyPosts = ({userId}) => {
+export const MyPosts = ({token}) => {
     const [allUserPosts, setAllUserPosts] = useState([])
 
     useEffect(()=> {
-        fetch(`http://localhost:8088/myposts/${userId}`)
+        fetch(`http://localhost:8088/myposts/${token}`)
         .then(response => response.json())
         .then(data => setAllUserPosts(data))
         .catch(error => console.error("Error with fetching posts", error))
-    }, [userId])
+    }, [token])
 
     return (
-        <section>
+        <section className="m-3">
             <h1>My Posts</h1>
             <div>
                 {allUserPosts.map(post => {
