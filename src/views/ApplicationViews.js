@@ -7,6 +7,7 @@ import { AllTags } from "../components/tags/AllTags"
 import { AllCategories } from "../components/categories/AllCategories"
 import { PostDetails } from "../components/posts/PostDetails"
 import { NewPost } from "../components/posts/NewPost"
+import { MyPosts } from "../components/posts/MyPosts"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -21,6 +22,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/tags" element={<AllTags />} />
         <Route path="/categories" element={<AllCategories />} />
         <Route path="/newPost" element={<NewPost token={token} />} />
+        <Route path="/my-posts" element={<MyPosts token={token} />} />
       </Route>
     </Routes>
   </>

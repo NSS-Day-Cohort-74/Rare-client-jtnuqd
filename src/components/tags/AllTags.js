@@ -20,7 +20,7 @@ export const AllTags = () => {
     return (
         <div class="columns">
         <section class="column card m-2">
-            <h1 class="title is-3 has-text-centered">All Tags</h1>
+            <h1 class="title is-3 has-text-centered">Tags</h1>
             {allTags.map((tag) => {
                return <section key={tag.id} class="m-3 card p-2">
                     <header>Tag: {tag.label}</header>

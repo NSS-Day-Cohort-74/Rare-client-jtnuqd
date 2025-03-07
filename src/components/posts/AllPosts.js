@@ -16,16 +16,25 @@ export const AllPosts = () => {
 
     return (
         <section>
-            <h1 class="title is-3 has-text-centered">All Posts</h1>
-            <div className="table-container">
-            <table className="table">
+            <h1 className="title is-3 has-text-centered">All Posts</h1>
+            <div className="grid">
+            <table className="cell is-hoverable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
             {allPosts.map((post) => {
-               return <section key={post.id} class=" card m-3 p-3">
-                    <Link to={`/posts/${post.id}`}><header>{post.title}</header></Link>
-                    <div>Author: {post.first_name} {post.last_name}</div>
-                    <div>Category: {post.category_label}</div>
-                </section>
+               return <tr key={post.id} className="table is-bordered is-striped">
+                    <td className=""><Link to={`/posts/${post.id}`}>{post.title}</Link></td>
+                    <td className="">{post.first_name} {post.last_name}</td>
+                    <td className="">{post.category_label}</td>
+                </tr>
             })}
+            </tbody>
             </table>
             </div>
         </section>

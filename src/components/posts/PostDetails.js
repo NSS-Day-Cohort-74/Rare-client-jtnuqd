@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { HumanDate } from "../utils/HumanDate"
 
 
 export const PostDetails = () => {
@@ -28,24 +29,24 @@ export const PostDetails = () => {
     }, [postId])
 
     return (
-        <section class="card m-2 p-2 columns">
+        <section className="card m-2 p-2 columns">
             <div className="column">
-                <h1 class="title is-4">{post?.title}</h1>
+                <h1 className="title is-4">{post?.title}</h1>
             <div className="card-image">
-                <figure class="image-is4by3">
+                <figure className="image-is4by3">
                    <img
                    src="https://bulma.io/assets/images/placeholders/1280x960.png"
                    alt="Placeholder img"
                    /> 
                 </figure>
             </div>
-                <div class="m-2 columns">
-                    <div className="column">Author: {post?.first_name} {post?.last_name}</div>
-                    <div className="column"> Date:{post?.publication_date}</div>
+                <div className="m-2 columns">
+                    <div className="column">By: {post?.first_name} {post?.last_name}</div>
+                    <div className="column">Date: {<HumanDate date={post?.publication_date} />}</div>
                 </div>
                 <div className="m-4">{post?.content}</div>
             </div>
-                <div class="">Category: {post?.category_label}</div>    
+                <div className="">Category: {post?.category_label}</div>    
         </section>
     )
 }
