@@ -35,12 +35,11 @@ export const EditPost = () => {
     const handleSaveEdit = (event) => {
         event.preventDefault()
         const editedPost = {
-      
-            user_id: post.user_id,
             title: post.title,
             content: post.content,
-            category_id: post.category_id,
+            category_id: parseInt(post.category_id),
             image_url: post.image_url,
+            user_id: post.user_id,
             publication_date: post.publication_date,
             approved: post.approved
         }
@@ -67,8 +66,7 @@ export const EditPost = () => {
                     <label className="label">Image URL: </label>
                     <input 
                         type="text"
-                        placeholder="Enter URL..."
-                        value={post?.image_url ? post.image_url : ''}
+                        value={post.image_url ? post.image_url : ''}
                         onChange={handleInputChange}
                         name="image_url"
                         required />
@@ -78,7 +76,6 @@ export const EditPost = () => {
                     <textarea
                         type="text"
                         className="textarea"
-                        placeholder="Enter post body..."
                         name="content"
                         value={post?.content ? post.content : ''}
                         onChange={handleInputChange}
@@ -88,9 +85,8 @@ export const EditPost = () => {
                     <label className="label">Category: </label>
                     <select
                         name="category_id"
-                        value={post?.category_id}
+                        value={post.category_id}
                         onChange={handleInputChange}>
-                            <option value="" >Select Category</option>
                             {allCategories.map(category => {
                                 return (<option value={category.id} key={category.id} >{category.label}</option>)
                             })}

@@ -26,11 +26,11 @@ export const MyPosts = ({token}) => {
 
     return (
         <section className="m-3">
-            <h1>My Posts</h1>
-            <div>
+            <h1 className="title is-3 has-text-centered">My Posts</h1>
+            <div className="m-3">
                 {allUserPosts.map(post => {
                     return (
-                        <section key={`post-key-${post.id}`} className="card">
+                        <section key={post.id} className="card p-4">
                             <div>{post.title}</div>
                             <div>Author: {post.author}</div>
                             <div>Date: {post.publication_date}</div>
