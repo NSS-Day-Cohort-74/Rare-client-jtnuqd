@@ -19,6 +19,7 @@ export const MyPosts = ({token}) => {
 
     const navigate = useNavigate()
 
+
     const handleDelete = (postId) => {
         deletePostByPostId(postId).then(()=>{fetchAndSetMyPosts()})
     }

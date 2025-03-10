@@ -5,6 +5,7 @@ import { getPostById, updateEditedPost } from "../../services/postService"
 export const EditPost = () => {
     const [post, setPost] = useState([])
     const [allCategories, setAllCategories] = useState([])
+  
 
     const { postId } = useParams()
 
@@ -12,7 +13,7 @@ export const EditPost = () => {
 
     useEffect(() => {
         getPostById(postId).then(data => {
-            const postObj = data[0]
+            const postObj = data
             setPost(postObj)
         })
     }, [postId])
@@ -34,13 +35,17 @@ export const EditPost = () => {
     const handleSaveEdit = (event) => {
         event.preventDefault()
         const editedPost = {
+      
+            user_id: post.user_id,
             title: post.title,
             content: post.content,
             category_id: post.category_id,
-            image_url: post.image_url
+            image_url: post.image_url,
+            publication_date: post.publication_date,
+            approved: post.approved
         }
 
-        updateEditedPost(editedPost).then(() => {
+        updateEditedPost(editedPost, postId).then(() => {
             navigate(`/posts/${postId}`)
         })
     }
@@ -54,7 +59,7 @@ export const EditPost = () => {
                     <input 
                         type="text"
                         name="title"
-                        value={post.title ? post.title : ''}
+                        value={post?.title ? post.title : ''}
                         onChange={handleInputChange}
                         required />
                 </fieldset>
@@ -63,8 +68,10 @@ export const EditPost = () => {
                     <input 
                         type="text"
                         placeholder="Enter URL..."
-                        name="imageURL"
-                        disabled />
+                        value={post?.image_url ? post.image_url : ''}
+                        onChange={handleInputChange}
+                        name="image_url"
+                        required />
                 </fieldset>
                 <fieldset className="m-2">
                     <label className="label">Post: </label>
@@ -73,14 +80,15 @@ export const EditPost = () => {
                         className="textarea"
                         placeholder="Enter post body..."
                         name="content"
-                        value={post.content ? post.content : ''}
+                        value={post?.content ? post.content : ''}
                         onChange={handleInputChange}
                         required />
                 </fieldset>
                 <fieldset className="m-2">
                     <label className="label">Category: </label>
                     <select
-                        value={post.category_id}
+                        name="category_id"
+                        value={post?.category_id}
                         onChange={handleInputChange}>
                             <option value="" >Select Category</option>
                             {allCategories.map(category => {
