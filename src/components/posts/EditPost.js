@@ -5,6 +5,7 @@ import { getPostById, updateEditedPost } from "../../services/postService"
 export const EditPost = () => {
     const [post, setPost] = useState([])
     const [allCategories, setAllCategories] = useState([])
+  
 
     const { postId } = useParams()
 
@@ -43,7 +44,7 @@ export const EditPost = () => {
             approved: post.approved
         }
 
-        updateEditedPost(postId, editedPost).then(() => {
+        updateEditedPost(editedPost, postId).then(() => {
             navigate(`/posts/${postId}`)
         })
     }
@@ -57,7 +58,7 @@ export const EditPost = () => {
                     <input 
                         type="text"
                         name="title"
-                        value={post.title ? post.title : ''}
+                        value={post?.title ? post.title : ''}
                         onChange={handleInputChange}
                         required />
                 </fieldset>
@@ -65,9 +66,10 @@ export const EditPost = () => {
                     <label className="label">Image URL: </label>
                     <input 
                         type="text"
-                        name="image_url"
                         value={post.image_url ? post.image_url : ''}
-                         />
+                        onChange={handleInputChange}
+                        name="image_url"
+                        required />
                 </fieldset>
                 <fieldset className="m-2">
                     <label className="label">Post: </label>
@@ -75,7 +77,7 @@ export const EditPost = () => {
                         type="text"
                         className="textarea"
                         name="content"
-                        value={post.content ? post.content : ''}
+                        value={post?.content ? post.content : ''}
                         onChange={handleInputChange}
                         required />
                 </fieldset>
