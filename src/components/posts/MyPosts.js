@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 export const MyPosts = ({token}) => {
     const [allUserPosts, setAllUserPosts] = useState([])
@@ -9,6 +10,12 @@ export const MyPosts = ({token}) => {
         .then(data => setAllUserPosts(data))
         .catch(error => console.error("Error with fetching posts", error))
     }, [token])
+
+    const navigate = useNavigate()
+
+    const handleDelete = () => {
+        
+    }
 
     return (
         <section className="m-3">
@@ -22,7 +29,10 @@ export const MyPosts = ({token}) => {
                             <div>Date: {post.publication_date}</div>
                             <div>{post.image_url}</div>
                             <div>
-                                <button className="button is-success m-3" >Edit</button>
+                                {/* Check to see if post's user_id is the current user's token, 
+                                if so, display the edit button, if not, do not show it */}
+                                {/* {post.user_id === token ? <button className="button is-success m-3" onClick={() => navigate(`/edit/post/${post.id}`)} >Edit</button> : ""} */}
+                                <button className="button is-success m-3" onClick={() => navigate(`/edit/post/${post.id}`)} >Edit</button> 
                                 <button className="button is-success m-3" >Delete</button>
                             </div>
                         </section>
