@@ -1,5 +1,8 @@
 export const HumanDate = ({ date }) => {
-  return new Date(date.replace(/-/g, '\/')).toLocaleDateString("en-US",
+  if (!date) return <span>Invalid Date</span>
+  
+  const formattedDate = date.includes("T") ? date.split("T")[0] : date
+  const humanReadableDate = new Date(formattedDate.replace(/-/g, '\/')).toLocaleDateString("en-US",
     {
       weekday: 'long',
       year: 'numeric',
@@ -7,4 +10,6 @@ export const HumanDate = ({ date }) => {
       day: 'numeric',
       timeZone: 'America/Chicago'
     })
+
+    return <>{humanReadableDate}</>
 }
