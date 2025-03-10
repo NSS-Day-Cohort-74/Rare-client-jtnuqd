@@ -25,3 +25,12 @@ export const updateEditedPost = async (post) => {
         body: JSON.stringify(post)
     })
 }
+
+export const deletePostByPostId = async (postId) => {
+    return await fetch(`http://localhost:8088/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+}
