@@ -12,7 +12,7 @@ export const EditPost = () => {
 
     useEffect(() => {
         getPostById(postId).then(data => {
-            const postObj = data[0]
+            const postObj = data
             setPost(postObj)
         })
     }, [postId])
@@ -36,11 +36,14 @@ export const EditPost = () => {
         const editedPost = {
             title: post.title,
             content: post.content,
-            category_id: post.category_id,
-            image_url: post.image_url
+            category_id: parseInt(post.category_id),
+            image_url: post.image_url,
+            user_id: post.user_id,
+            publication_date: post.publication_date,
+            approved: post.approved
         }
 
-        updateEditedPost(editedPost).then(() => {
+        updateEditedPost(postId, editedPost).then(() => {
             navigate(`/posts/${postId}`)
         })
     }
@@ -62,16 +65,15 @@ export const EditPost = () => {
                     <label className="label">Image URL: </label>
                     <input 
                         type="text"
-                        placeholder="Enter URL..."
-                        name="imageURL"
-                        disabled />
+                        name="image_url"
+                        value={post.image_url ? post.image_url : ''}
+                         />
                 </fieldset>
                 <fieldset className="m-2">
                     <label className="label">Post: </label>
                     <textarea
                         type="text"
                         className="textarea"
-                        placeholder="Enter post body..."
                         name="content"
                         value={post.content ? post.content : ''}
                         onChange={handleInputChange}
@@ -80,9 +82,9 @@ export const EditPost = () => {
                 <fieldset className="m-2">
                     <label className="label">Category: </label>
                     <select
+                        name="category_id"
                         value={post.category_id}
                         onChange={handleInputChange}>
-                            <option value="" >Select Category</option>
                             {allCategories.map(category => {
                                 return (<option value={category.id} key={category.id} >{category.label}</option>)
                             })}

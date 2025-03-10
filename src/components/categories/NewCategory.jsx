@@ -21,11 +21,11 @@ export const NewCategoryForm = ({ setAndFetchCategories }) => {
     };
 
     return (
-        <section class="card p-4 m-3">
-            <h1 class="title is-5 m-3 has-text-centered">New Category</h1>
+        <section className="card p-4 m-3">
+            <h1 className="title is-5 m-3 has-text-centered">New Category</h1>
             <form onSubmit={handleCreateCategory}>
-                <fieldset class="m-2">
-                    <label class="m-1">Category Label:</label>
+                <fieldset className="m-2">
+                    <label className="m-1">Category Label:</label>
                     <input
                         type="text"
                         name="cat_label"
@@ -34,7 +34,7 @@ export const NewCategoryForm = ({ setAndFetchCategories }) => {
                         required
                     />
                 </fieldset>
-                <button class="button is-success m-3" type="submit">
+                <button className="button is-success m-3" type="submit">
                     Submit Category
                 </button>
             </form>

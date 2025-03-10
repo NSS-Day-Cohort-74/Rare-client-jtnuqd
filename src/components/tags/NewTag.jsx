@@ -20,11 +20,11 @@ export const NewTagForm = ({ setAndFetchTags }) => {
     };
 
     return (
-        <section class="card p-4 m-3">
-            <h1 class="title is-5 m-2">New Tag</h1>
+        <section className="card p-4 m-3">
+            <h1 className="title is-5 m-2">New Tag</h1>
             <form onSubmit={handleCreateNewTag}>
-                <fieldset class="m-2">
-                    <label class="m-1">Tag Label</label>
+                <fieldset className="m-2">
+                    <label className="m-1">Tag Label</label>
                     <input
                         type="text"
                         name="tag_label"
@@ -33,7 +33,7 @@ export const NewTagForm = ({ setAndFetchTags }) => {
                         required
                     />
                 </fieldset>
-                <button type="submit" class="button is-success m-3">
+                <button type="submit" className="button is-success m-3">
                     Submit Tag
                 </button>
             </form>
