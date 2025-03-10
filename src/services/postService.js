@@ -13,15 +13,16 @@ export const createNewPost = async (submissionObject) => {
 }
 
 export const getPostById = (id) => {
-    return fetch(`http://localhost:8088/posts?_id=${id}`).then(res => res.json())
+    return fetch(`http://localhost:8088/posts/${id}`).then(res => res.json())
 }
 
-export const updateEditedPost = async (post) => {
-    return await fetch(`http://localhost:8088/posts/${post.id}`, {
+export const updateEditedPost = async (post, postId) => {
+ await fetch(`http://localhost:8088/posts/${postId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(post)
+        
     })
 }

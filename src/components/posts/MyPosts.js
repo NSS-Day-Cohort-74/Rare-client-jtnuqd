@@ -13,6 +13,10 @@ export const MyPosts = ({token}) => {
 
     const navigate = useNavigate()
 
+    const handleDelete = () => {
+        
+    }
+
     return (
         <section className="m-3">
             <h1>My Posts</h1>
