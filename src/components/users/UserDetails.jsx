@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserDataByUserId } from "../../services/userService";
 import { HumanDate } from "../utils/HumanDate";
-import { subscribeToUser } from "../../services/subscriptionService";
+import {
+    deleteSubscriptionBySubscriptionId,
+    subscribeToUser,
+} from "../../services/subscriptionService";
 
 export const UserDetail = ({ token }) => {
     const [userData, setUserData] = useState();
@@ -12,9 +15,12 @@ export const UserDetail = ({ token }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        getUserDataByUserId(userId).then((data) => setUserData(data));
+        fetchAndSetUserData();
     }, []);
 
+    const fetchAndSetUserData = () => {
+        getUserDataByUserId(userId).then((data) => setUserData(data));
+    };
     const handleSubscribe = () => {
         const submissionObject = {
             follower_id: parseInt(token),
@@ -26,11 +32,10 @@ export const UserDetail = ({ token }) => {
         });
     };
 
-    const handleUnsubscribe = () => {
-        const submissionObject = {
-            follower_id: parseInt(token),
-            author_id: parseInt(userId),
-        };
+    const handleUnsubscribe = (sub_id) => {
+        deleteSubscriptionBySubscriptionId(parseInt(sub_id)).then(() =>
+            fetchAndSetUserData()
+        );
     };
 
     return (
@@ -62,8 +67,15 @@ export const UserDetail = ({ token }) => {
                 </div>
             </div>
             <div className="cell">
-                {userData?.followers?.includes(parseInt(token)) ||
-                parseInt(token) === parseInt(userId) ? (
+                {/* Filter through the list of follower dictionaries, to see if the user's token is a value for a follower_id key.
+                    Check to see if the current user detail userId is the author_id of the follower.
+                    Check the length. If length != 0, then the button will be disabled.
+                */}
+                {userData?.followers?.filter(
+                    (follower) =>
+                        follower.follower_id === parseInt(token) &&
+                        follower.author_id === parseInt(userId)
+                ).length || parseInt(token) === parseInt(userId) ? (
                     <button className="button" disabled>
                         Subscribe to User
                     </button>
@@ -77,11 +89,22 @@ export const UserDetail = ({ token }) => {
                         Subscribe to User
                     </button>
                 )}
-                {userData?.followers?.includes(parseInt(token)) ? (
+                {userData?.followers?.filter(
+                    (follower) =>
+                        follower.follower_id === parseInt(token) &&
+                        follower.author_id === parseInt(userId)
+                ).length ? (
                     <button
                         className="button"
                         onClick={() => {
-                            handleUnsubscribe();
+                            handleUnsubscribe(
+                                userData?.followers?.filter(
+                                    (follower) =>
+                                        follower.follower_id ===
+                                            parseInt(token) &&
+                                        follower.author_id === parseInt(userId)
+                                )[0].sub_id
+                            );
                         }}
                     >
                         Unsubscribe
