@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { HumanDate } from "../utils/HumanDate"
 
 
@@ -8,6 +8,8 @@ export const PostDetails = () => {
     const { postId } = useParams()
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchPostDetails = async () => {
@@ -43,6 +45,7 @@ export const PostDetails = () => {
                 <div className="m-2 columns">
                     <div className="column">By: {post?.first_name} {post?.last_name}</div>
                     <div className="column">Date: {<HumanDate date={post?.publication_date} />}</div>
+                    <button className="button is-success" onClick={() => navigate(`/posts/${postId}/comments`)} >View Comments</button>
                 </div>
                 <div className="m-4">{post?.content}</div>
             </div>
