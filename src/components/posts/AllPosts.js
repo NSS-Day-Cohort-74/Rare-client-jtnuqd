@@ -57,7 +57,7 @@ export const AllPosts = () => {
             {filteredPosts.map((post) => {
                return <tr key={post.id} className="table is-bordered is-striped">
                     <td className=""><Link to={`/posts/${post.id}`}>{post.title}</Link></td>
-                    <td className="">{post.first_name} {post.last_name}</td>
+                    <td className=""><Link to={`/users/${post.user_id}`}>{post.first_name} {post.last_name}</Link></td>
                     <td className="">{post.category_label}</td>
                 </tr>
             })}
