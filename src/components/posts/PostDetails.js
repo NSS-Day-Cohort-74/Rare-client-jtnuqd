@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, Link } from "react-router-dom"
 import { HumanDate } from "../utils/HumanDate"
 
 
@@ -43,7 +43,7 @@ export const PostDetails = () => {
                 </figure>
             </div>
                 <div className="m-2 columns">
-                    <div className="column">By: {post?.first_name} {post?.last_name}</div>
+                    <div className="column">By: <Link to={`/users/${post?.user_id}`}>{post?.first_name} {post?.last_name}</Link></div>
                     <div className="column">Date: {<HumanDate date={post?.publication_date} />}</div>
                     <button className="button is-success" onClick={() => navigate(`/posts/${postId}/comments`)} >View Comments</button>
                 </div>
