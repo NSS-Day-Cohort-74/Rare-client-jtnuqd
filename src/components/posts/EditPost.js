@@ -66,7 +66,7 @@ export const EditPost = () => {
                     <label className="label">Image URL: </label>
                     <input 
                         type="text"
-                        value={post.image_url ? post.image_url : ''}
+                        value={post?.image_url ? post.image_url : ''}
                         onChange={handleInputChange}
                         name="image_url"
                         required />
