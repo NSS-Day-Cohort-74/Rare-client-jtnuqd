@@ -1,16 +1,30 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUserDataByUserId } from "../../services/userService";
 import { HumanDate } from "../utils/HumanDate";
+import { subscribeToUser } from "../../services/subscriptionService";
 
 export const UserDetail = ({ token }) => {
     const [userData, setUserData] = useState();
 
     const { userId } = useParams();
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         getUserDataByUserId(userId).then((data) => setUserData(data));
     }, []);
+
+    const handleSubscribe = () => {
+        const submissionObject = {
+            follower_id: parseInt(token),
+            author_id: parseInt(userId),
+            created_on: new Date(),
+        };
+        subscribeToUser(submissionObject).then(() => {
+            navigate("/");
+        });
+    };
 
     return (
         <div className="grid">
@@ -47,7 +61,14 @@ export const UserDetail = ({ token }) => {
                         Subscribe to User
                     </button>
                 ) : (
-                    <button className="button">Subscribe to User</button>
+                    <button
+                        className="button"
+                        onClick={() => {
+                            handleSubscribe();
+                        }}
+                    >
+                        Subscribe to User
+                    </button>
                 )}
                 {/* <button className="button">Loading...</button> */}
             </div>
