@@ -9,6 +9,7 @@ import { PostDetails } from "../components/posts/PostDetails"
 import { NewPost } from "../components/posts/NewPost"
 import { MyPosts } from "../components/posts/MyPosts"
 import { EditPost } from "../components/posts/EditPost"
+import { SubscriberView } from "../components/subscribers/SubscriberView"
 import { UserList } from "../components/users/AllUsers"
 import { UserDetail } from "../components/users/UserDetails"
 
@@ -18,6 +19,7 @@ export const ApplicationViews = ({ token, setToken }) => {
       <Route path="/login" element={<Login setToken={setToken} />}  />
       <Route path="/register" element={<Register setToken={setToken} />}  />
       <Route element={<Authorized token={token} />}>
+        <Route path="/" element={<SubscriberView token={token} />} />
         <Route path="/posts" >
             <Route index element={<AllPosts />} />
             <Route path=":postId" element={<PostDetails />} />
