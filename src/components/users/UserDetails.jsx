@@ -26,6 +26,13 @@ export const UserDetail = ({ token }) => {
         });
     };
 
+    const handleUnsubscribe = () => {
+        const submissionObject = {
+            follower_id: parseInt(token),
+            author_id: parseInt(userId),
+        };
+    };
+
     return (
         <div className="grid">
             <div className="cell is-col-min-20">
@@ -70,7 +77,18 @@ export const UserDetail = ({ token }) => {
                         Subscribe to User
                     </button>
                 )}
-                {/* <button className="button">Loading...</button> */}
+                {userData?.followers?.includes(parseInt(token)) ? (
+                    <button
+                        className="button"
+                        onClick={() => {
+                            handleUnsubscribe();
+                        }}
+                    >
+                        Unsubscribe
+                    </button>
+                ) : (
+                    ""
+                )}
             </div>
         </div>
     );
