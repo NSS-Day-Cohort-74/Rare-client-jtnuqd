@@ -32,7 +32,7 @@ export const NewComment = ({ token }) => {
                     name="content"
                     value={content}
                     onChange={(event) => setContent(event.target.value)} />
-                <button onClick={handleSubmit} className="button is-success m-5">Submit</button>
+                <button disabled={!content.trim()} onClick={handleSubmit} className="button is-success m-5">Submit</button>
             </div>
         </section>
     )
