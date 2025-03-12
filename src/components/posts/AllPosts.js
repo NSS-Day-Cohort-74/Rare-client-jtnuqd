@@ -7,6 +7,7 @@ export const AllPosts = () => {
     const [allPosts, setAllPosts] = useState([])
     const [allCategories, setAllCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState("")
+    const [searchQuery, setSearchQuery] = useState("")
     const [error, setError] = useState(null)
 
     useEffect(()=> {
@@ -30,6 +31,9 @@ export const AllPosts = () => {
     const filteredPosts = selectedCategory ? allPosts.filter(post => 
         post.category_id === parseInt(selectedCategory)) : allPosts
 
+
+    const searchedPosts = searchQuery ? filteredPosts.filter(post => post.title.includes(searchQuery)) : filteredPosts
+
     return (
         <section>
             <h1 className="title is-3 has-text-centered">All Posts</h1>
@@ -43,6 +47,10 @@ export const AllPosts = () => {
                         ))}
                     </select>
                 </div>
+                <label>Search By Title: </label>
+                <div className="m-3">
+                        <input type="text" value={searchQuery} onChange={(event)=>{setSearchQuery(event.target.value)}} />
+                </div>
             </div>
             <div className="grid">
             <table className="cell is-hoverable">
@@ -54,7 +62,7 @@ export const AllPosts = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {filteredPosts.map((post) => {
+            {searchedPosts.map((post) => {
                return <tr key={post.id} className="table is-bordered is-striped">
                     <td className=""><Link to={`/posts/${post.id}`}>{post.title}</Link></td>
                     <td className=""><Link to={`/users/${post.user_id}`}>{post.first_name} {post.last_name}</Link></td>
