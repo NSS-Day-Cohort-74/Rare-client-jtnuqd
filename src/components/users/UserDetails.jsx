@@ -88,10 +88,6 @@ export const UserDetail = ({ token }) => {
                 </div>
             </div>
             <div className="cell">
-                {/* Filter through the list of follower dictionaries, to see if the user's token is a value for a follower_id key.
-                    Check to see if the current user detail userId is the author_id of the follower.
-                    Check the length. If length != 0, then the button will be disabled.
-                */}
                 {targetSubscription || parseInt(token) === parseInt(userId) ? (
                     <button className="button" disabled>
                         Subscribe to User
