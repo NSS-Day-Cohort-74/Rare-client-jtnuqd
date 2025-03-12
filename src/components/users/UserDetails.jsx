@@ -2,18 +2,45 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserDataByUserId } from "../../services/userService";
 import { HumanDate } from "../utils/HumanDate";
-import { subscribeToUser } from "../../services/subscriptionService";
+import {
+    deleteSubscriptionBySubscriptionId,
+    subscribeToUser,
+} from "../../services/subscriptionService";
 
 export const UserDetail = ({ token }) => {
     const [userData, setUserData] = useState();
+    const [allSubscriptions, setAllSubscriptions] = useState([]);
+    const [targetSubscription, setTargetSubscription] = useState({});
 
     const { userId } = useParams();
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        getUserDataByUserId(userId).then((data) => setUserData(data));
+        fetchAndSetUserData();
+        fetchAndSetSubscriptions();
     }, []);
+
+    useEffect(() => {
+        setTargetSubscription(
+            allSubscriptions?.find(
+                (subscription) => subscription.author_id === parseInt(userId)
+            )
+        );
+    }, [allSubscriptions, userId]);
+
+    const fetchAndSetUserData = () => {
+        getUserDataByUserId(userId).then((data) => setUserData(data));
+    };
+
+    const fetchAndSetSubscriptions = () => {
+        fetch(`http://localhost:8088/subscriptions/${token}`)
+            .then((response) => response.json())
+            .then((data) => setAllSubscriptions(data))
+            .catch((error) =>
+                console.error("Error with fetching subscriptions", error)
+            );
+    };
 
     const handleSubscribe = () => {
         const submissionObject = {
@@ -24,6 +51,12 @@ export const UserDetail = ({ token }) => {
         subscribeToUser(submissionObject).then(() => {
             navigate("/");
         });
+    };
+
+    const handleUnsubscribe = () => {
+        deleteSubscriptionBySubscriptionId(
+            parseInt(targetSubscription.id)
+        ).then(() => fetchAndSetSubscriptions());
     };
 
     return (
@@ -55,8 +88,7 @@ export const UserDetail = ({ token }) => {
                 </div>
             </div>
             <div className="cell">
-                {userData?.followers?.includes(parseInt(token)) ||
-                parseInt(token) === parseInt(userId) ? (
+                {targetSubscription || parseInt(token) === parseInt(userId) ? (
                     <button className="button" disabled>
                         Subscribe to User
                     </button>
@@ -70,7 +102,18 @@ export const UserDetail = ({ token }) => {
                         Subscribe to User
                     </button>
                 )}
-                {/* <button className="button">Loading...</button> */}
+                {targetSubscription ? (
+                    <button
+                        className="button"
+                        onClick={() => {
+                            handleUnsubscribe();
+                        }}
+                    >
+                        Unsubscribe
+                    </button>
+                ) : (
+                    ""
+                )}
             </div>
         </div>
     );
