@@ -45,7 +45,8 @@ export const PostDetails = () => {
                 <div className="m-2 columns">
                     <div className="column">By: <Link to={`/users/${post?.user_id}`}>{post?.first_name} {post?.last_name}</Link></div>
                     <div className="column">Date: {<HumanDate date={post?.publication_date} />}</div>
-                    <button className="button is-success" onClick={() => navigate(`/posts/${postId}/comments`)} >View Comments</button>
+                    <button className="button is-success m-2" onClick={() => navigate(`/posts/${postId}/comments`)} >View Comments</button>
+                    <button className="button is-success m-2" onClick={() => navigate(`/posts/${postId}/newComment`)} >Add Comment</button>
                 </div>
                 <div className="m-4">{post?.content}</div>
             </div>
