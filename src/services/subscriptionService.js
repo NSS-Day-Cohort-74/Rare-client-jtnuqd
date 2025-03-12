@@ -18,5 +18,6 @@ export const deleteSubscriptionBySubscriptionId = async (id) => {
         }
     })
 
-    return response
+    return response.ok
+    
 }

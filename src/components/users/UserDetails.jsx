@@ -9,6 +9,8 @@ import {
 
 export const UserDetail = ({ token }) => {
     const [userData, setUserData] = useState();
+    const [allSubscriptions, setAllSubscriptions] = useState([]);
+    const [targetSubscription, setTargetSubscription] = useState({});
 
     const { userId } = useParams();
 
@@ -16,11 +18,30 @@ export const UserDetail = ({ token }) => {
 
     useEffect(() => {
         fetchAndSetUserData();
+        fetchAndSetSubscriptions();
     }, []);
+
+    useEffect(() => {
+        setTargetSubscription(
+            allSubscriptions?.find(
+                (subscription) => subscription.author_id === parseInt(userId)
+            )
+        );
+    }, [allSubscriptions, userId]);
 
     const fetchAndSetUserData = () => {
         getUserDataByUserId(userId).then((data) => setUserData(data));
     };
+
+    const fetchAndSetSubscriptions = () => {
+        fetch(`http://localhost:8088/subscriptions/${token}`)
+            .then((response) => response.json())
+            .then((data) => setAllSubscriptions(data))
+            .catch((error) =>
+                console.error("Error with fetching subscriptions", error)
+            );
+    };
+
     const handleSubscribe = () => {
         const submissionObject = {
             follower_id: parseInt(token),
@@ -32,10 +53,10 @@ export const UserDetail = ({ token }) => {
         });
     };
 
-    const handleUnsubscribe = (sub_id) => {
-        deleteSubscriptionBySubscriptionId(parseInt(sub_id)).then(() =>
-            fetchAndSetUserData()
-        );
+    const handleUnsubscribe = () => {
+        deleteSubscriptionBySubscriptionId(
+            parseInt(targetSubscription.id)
+        ).then(() => fetchAndSetSubscriptions());
     };
 
     return (
@@ -71,11 +92,7 @@ export const UserDetail = ({ token }) => {
                     Check to see if the current user detail userId is the author_id of the follower.
                     Check the length. If length != 0, then the button will be disabled.
                 */}
-                {userData?.followers?.filter(
-                    (follower) =>
-                        follower.follower_id === parseInt(token) &&
-                        follower.author_id === parseInt(userId)
-                ).length || parseInt(token) === parseInt(userId) ? (
+                {targetSubscription || parseInt(token) === parseInt(userId) ? (
                     <button className="button" disabled>
                         Subscribe to User
                     </button>
@@ -89,22 +106,11 @@ export const UserDetail = ({ token }) => {
                         Subscribe to User
                     </button>
                 )}
-                {userData?.followers?.filter(
-                    (follower) =>
-                        follower.follower_id === parseInt(token) &&
-                        follower.author_id === parseInt(userId)
-                ).length ? (
+                {targetSubscription ? (
                     <button
                         className="button"
                         onClick={() => {
-                            handleUnsubscribe(
-                                userData?.followers?.filter(
-                                    (follower) =>
-                                        follower.follower_id ===
-                                            parseInt(token) &&
-                                        follower.author_id === parseInt(userId)
-                                )[0].sub_id
-                            );
+                            handleUnsubscribe();
                         }}
                     >
                         Unsubscribe
