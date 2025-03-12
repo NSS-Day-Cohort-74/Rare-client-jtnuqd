@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const UserList = () => {
     const [allUsers, setAllUsers] = useState([]);
@@ -28,7 +29,11 @@ export const UserList = () => {
                                     key={user.id}
                                     className="table is-bordered is-striped"
                                 >
-                                    <td className="">{user.username}</td>
+                                    <td className="">
+                                        <Link to={`/users/${user.id}`}>
+                                            {user.username}
+                                        </Link>
+                                    </td>
                                     <td className="">
                                         {user.first_name} {user.last_name}
                                     </td>

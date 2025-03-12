@@ -9,7 +9,11 @@ import { PostDetails } from "../components/posts/PostDetails"
 import { NewPost } from "../components/posts/NewPost"
 import { MyPosts } from "../components/posts/MyPosts"
 import { EditPost } from "../components/posts/EditPost"
+import { SubscriberView } from "../components/subscribers/SubscriberView"
+import { CommentsView } from "../components/comments/CommentsView"
 import { UserList } from "../components/users/AllUsers"
+import { UserDetail } from "../components/users/UserDetails"
+import { NewComment } from "../components/comments/NewComment"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -17,13 +21,19 @@ export const ApplicationViews = ({ token, setToken }) => {
       <Route path="/login" element={<Login setToken={setToken} />}  />
       <Route path="/register" element={<Register setToken={setToken} />}  />
       <Route element={<Authorized token={token} />}>
+        <Route path="/" element={<SubscriberView token={token} />} />
         <Route path="/posts" >
             <Route index element={<AllPosts />} />
             <Route path=":postId" element={<PostDetails />} />
+            <Route path=":postId/comments" element={<CommentsView />} />
+            <Route path=":postId/newComment" element={<NewComment token={token} />} />
         </Route>
         <Route path="/tags" element={<AllTags />} />
         <Route path="/categories" element={<AllCategories />} />
-        <Route path="/users" element={<UserList />} />
+        <Route path="/users">
+          <Route index element={<UserList />} />
+          <Route path=":userId" element={<UserDetail token={token}/>} />
+        </Route>
         <Route path="/newPost" element={<NewPost token={token} />} />
         <Route path="/my-posts" element={<MyPosts token={token} />} />
         <Route path="/edit">

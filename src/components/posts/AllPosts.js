@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export const AllPosts = () => {
-  const [allPosts, setAllPosts] = useState([]);
-  const [allCategories, setAllCategories] = useState([]);
-  const [allAuthors, setAllAuthors] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedAuthor, setSelectedAuthor] = useState("");
-  const [error, setError] = useState(null);
+    const [allPosts, setAllPosts] = useState([])
+    const [allCategories, setAllCategories] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState("")
+    const [searchQuery, setSearchQuery] = useState("")
+    const [error, setError] = useState(null)
 
   // Fetch all posts
   useEffect(() => {
@@ -52,56 +51,42 @@ export const AllPosts = () => {
     selectedCategory ? post.category_id === parseInt(selectedCategory) : true
   );
 
-  return (
-    <section>
-      <h1 className="title is-3 has-text-centered">All Posts</h1>
 
-      <div className="m-3 level">
-        <div className="level-item">
-          <label className="mr-2">Filter by Category:</label>
-          <select value={selectedCategory} onChange={handleCategoryChange}>
-            <option value="">All Categories</option>
-            {allCategories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.label}
-              </option>
-            ))}
-          </select>
-        </div>
+    const searchedPosts = searchQuery ? filteredPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase())) : filteredPosts
 
-        <div className="level-item">
-          <label className="mr-2">Filter by Author:</label>
-          <select value={selectedAuthor} onChange={handleAuthorChange}>
-            <option value="">All Authors</option>
-            {allAuthors.map((author) => (
-              <option key={author.id} value={author.id}>
-                {author.first_name} {author.last_name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="grid">
-        <table className="table is-bordered is-striped is-hoverable">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Category</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredPosts.length > 0 ? (
-              filteredPosts.map((post) => (
-                <tr key={post.id}>
-                  <td>
-                    <Link to={`/posts/${post.id}`}>{post.title}</Link>
-                  </td>
-                  <td>
-                    {post.first_name} {post.last_name}
-                  </td>
-                  <td>{post.category_label}</td>
+    return (
+        <section>
+            <h1 className="title is-3 has-text-centered">All Posts</h1>
+            <div className="m-3 level-item">
+                <label>Filter by Category: </label>
+                <div className="m-3">
+                    <select value={selectedCategory} onChange={handleCategoryChange} >
+                        <option value="">All Categories</option>
+                        {allCategories.map(category => (
+                            <option key={category.id} value={category.id}>{category.label}</option>
+                        ))}
+                    </select>
+                </div>
+                <label>Search By Title: </label>
+                <div className="m-3">
+                        <input type="text" value={searchQuery} onChange={(event)=>{setSearchQuery(event.target.value)}} />
+                </div>
+            </div>
+            <div className="grid">
+            <table className="cell is-hoverable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+            {searchedPosts.map((post) => {
+               return <tr key={post.id} className="table is-bordered is-striped">
+                    <td className=""><Link to={`/posts/${post.id}`}>{post.title}</Link></td>
+                    <td className=""><Link to={`/users/${post.user_id}`}>{post.first_name} {post.last_name}</Link></td>
+                    <td className="">{post.category_label}</td>
                 </tr>
               ))
             ) : (
