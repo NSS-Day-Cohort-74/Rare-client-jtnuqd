@@ -32,7 +32,7 @@ export const AllPosts = () => {
         post.category_id === parseInt(selectedCategory)) : allPosts
 
 
-    const searchedPosts = searchQuery ? filteredPosts.filter(post => post.title.includes(searchQuery)) : filteredPosts
+    const searchedPosts = searchQuery ? filteredPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase())) : filteredPosts
 
     return (
         <section>
