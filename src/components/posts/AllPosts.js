@@ -49,8 +49,7 @@ export const AllPosts = () => {
         setSelectedTag(event.target.value)
     }
   
-    const searchedPosts = searchQuery ? filteredPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase())) : filteredPosts
-
+    
     const filteredPosts = allPosts.filter(post => {
         if (!postTags.length) return true;
         
@@ -58,7 +57,8 @@ export const AllPosts = () => {
         const tagMatch = selectedTag ? postTags.some(pt => pt.post_id === post.id && pt.tag_id === parseInt(selectedTag)) : true;
         return categoryMatch && tagMatch
     })
-
+    
+    const searchedPosts = searchQuery ? filteredPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase())) : filteredPosts
     console.log("postTags", postTags)
     console.log("selectedTag", selectedTag)
     
