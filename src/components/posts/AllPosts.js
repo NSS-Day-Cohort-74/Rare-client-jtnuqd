@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getAllAuthors } from "../../services/postService";
 import { Link } from "react-router-dom";
+import { getAllAuthors } from "../services/postService";
 
 export const AllPosts = () => {
   const [allPosts, setAllPosts] = useState([]);
@@ -8,6 +8,7 @@ export const AllPosts = () => {
   const [allAuthors, setAllAuthors] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedAuthor, setSelectedAuthor] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [error, setError] = useState(null);
 
   // Fetch posts, filtering by author if selected
@@ -20,7 +21,7 @@ export const AllPosts = () => {
       .then((response) => response.json())
       .then((data) => setAllPosts(data))
       .catch((error) => console.error("Error fetching posts", error));
-  }, [selectedAuthor]); // Re-fetch posts when author selection changes
+  }, [selectedAuthor]);
 
   // Fetch categories
   useEffect(() => {
@@ -47,10 +48,26 @@ export const AllPosts = () => {
     setSelectedAuthor(event.target.value);
   };
 
-  // Filter posts by category & author
-  const filteredPosts = allPosts.filter((post) =>
-    selectedCategory ? post.category_id === parseInt(selectedCategory) : true
+  // Search input change handler
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // new filter for Category and Author
+  const filteredPosts = allPosts.filter(
+    (post) =>
+      (selectedCategory
+        ? post.category_id === parseInt(selectedCategory)
+        : true) &&
+      (selectedAuthor ? post.user_id === parseInt(selectedAuthor) : true)
   );
+
+  // Search filter
+  const searchedPosts = searchQuery
+    ? filteredPosts.filter((post) =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : filteredPosts;
 
   return (
     <section>
@@ -80,6 +97,17 @@ export const AllPosts = () => {
             ))}
           </select>
         </div>
+
+        <div className="level-item">
+          <label className="mr-2">Search Posts:</label>
+          <input
+            type="text"
+            className="input"
+            placeholder="Search by title..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+        </div>
       </div>
 
       <div className="grid">
@@ -92,8 +120,8 @@ export const AllPosts = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredPosts.length > 0 ? (
-              filteredPosts.map((post) => (
+            {searchedPosts.length > 0 ? (
+              searchedPosts.map((post) => (
                 <tr key={post.id}>
                   <td>
                     <Link to={`/posts/${post.id}`}>{post.title}</Link>
