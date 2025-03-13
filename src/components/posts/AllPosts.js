@@ -45,7 +45,9 @@ export const AllPosts = () => {
         setSelectedCategory(event.target.value)
     }
 
-
+    useEffect(() => {
+        
+    },[])
     
     const handleTagChange = (event) => {
         setSelectedTag(event.target.value)
