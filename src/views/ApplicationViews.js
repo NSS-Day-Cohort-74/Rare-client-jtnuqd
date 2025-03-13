@@ -13,6 +13,7 @@ import { SubscriberView } from "../components/subscribers/SubscriberView"
 import { CommentsView } from "../components/comments/CommentsView"
 import { UserList } from "../components/users/AllUsers"
 import { UserDetail } from "../components/users/UserDetails"
+import { NewComment } from "../components/comments/NewComment"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -24,7 +25,8 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/posts" >
             <Route index element={<AllPosts />} />
             <Route path=":postId" element={<PostDetails />} />
-            <Route path=":postId/comments" element={<CommentsView />} />
+            <Route path=":postId/comments" element={<CommentsView token={token} />} />
+            <Route path=":postId/newComment" element={<NewComment token={token} />} />
         </Route>
         <Route path="/tags" element={<AllTags />} />
         <Route path="/categories" element={<AllCategories />} />

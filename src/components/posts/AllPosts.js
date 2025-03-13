@@ -10,6 +10,7 @@ export const AllPosts = () => {
     const [allTags, setAllTags] = useState([])
     const [selectedTag, setSelectedTag] = useState("")
     const [postTags, setAllPostTags] = useState([])
+    const [searchQuery, setSearchQuery] = useState("")
     const [error, setError] = useState(null)
 
     useEffect(()=> {
@@ -59,6 +60,9 @@ export const AllPosts = () => {
     console.log("postTags", postTags)
     console.log("selectedTag", selectedTag)
     
+
+    const searchedPosts = searchQuery ? filteredPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase())) : filteredPosts
+
     return (
         <section>
             <h1 className="title is-3 has-text-centered">All Posts</h1>
@@ -71,6 +75,10 @@ export const AllPosts = () => {
                             <option key={category.id} value={category.id}>{category.label}</option>
                         ))}
                     </select>
+                </div>
+                <label>Search By Title: </label>
+                <div className="m-3">
+                        <input type="text" value={searchQuery} onChange={(event)=>{setSearchQuery(event.target.value)}} />
                 </div>
             </div>
             <div className="m-3 level-item">
@@ -94,7 +102,7 @@ export const AllPosts = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {filteredPosts.map((post) => {
+            {searchedPosts.map((post) => {
                return <tr key={post.id} className="table is-bordered is-striped">
                     <td className=""><Link to={`/posts/${post.id}`}>{post.title}</Link></td>
                     <td className=""><Link to={`/users/${post.user_id}`}>{post.first_name} {post.last_name}</Link></td>
