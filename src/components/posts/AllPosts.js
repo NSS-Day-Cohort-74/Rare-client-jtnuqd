@@ -7,6 +7,9 @@ export const AllPosts = () => {
     const [allPosts, setAllPosts] = useState([])
     const [allCategories, setAllCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState("")
+    const [allTags, setAllTags] = useState([])
+    const [selectedTag, setSelectedTag] = useState("")
+    const [postTags, setAllPostTags] = useState([])
     const [searchQuery, setSearchQuery] = useState("")
     const [allTags, setAllTags] = useState([])
     const [selectedTag, setSelectedTag] = useState("")
@@ -45,14 +48,10 @@ export const AllPosts = () => {
         setSelectedCategory(event.target.value)
     }
 
-    useEffect(() => {
-        
-    },[])
-    
     const handleTagChange = (event) => {
         setSelectedTag(event.target.value)
     }
-    
+
     const filteredPosts = allPosts.filter(post => {
         if (!postTags.length) return true;
         
@@ -60,7 +59,11 @@ export const AllPosts = () => {
         const tagMatch = selectedTag ? postTags.some(pt => pt.post_id === post.id && pt.tag_id === parseInt(selectedTag)) : true;
         return categoryMatch && tagMatch
     })
+
+    console.log("postTags", postTags)
+    console.log("selectedTag", selectedTag)
     
+
     const searchedPosts = searchQuery ? filteredPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase())) : filteredPosts
     console.log("postTags", postTags)
     console.log("selectedTag", selectedTag)
