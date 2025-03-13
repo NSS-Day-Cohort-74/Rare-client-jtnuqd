@@ -18,6 +18,10 @@ export const getPostCategoryAndUser = async () => {
   ).then((res) => res.json());
 };
 
+export const getAllAuthors = async () => {
+  return fetch("http://localhost:8088/users").then((res) => res.json());
+};
+
 export const getPostById = (id) => {
   return fetch(`http://localhost:8088/posts/${id}`).then((res) => res.json());
 };
