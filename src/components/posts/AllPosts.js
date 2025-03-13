@@ -40,15 +40,16 @@ export const AllPosts = () => {
         .then(data => setAllPostTags(data))
         .catch(error => console.error("Error with fetching posttags", error))
     }, [])
-    
+
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value)
     }
+
+
     
     const handleTagChange = (event) => {
         setSelectedTag(event.target.value)
     }
-  
     
     const filteredPosts = allPosts.filter(post => {
         if (!postTags.length) return true;
@@ -74,6 +75,10 @@ export const AllPosts = () => {
                             <option key={category.id} value={category.id}>{category.label}</option>
                         ))}
                     </select>
+                </div>
+                <label>Search By Title: </label>
+                <div className="m-3">
+                        <input type="text" value={searchQuery} onChange={(event)=>{setSearchQuery(event.target.value)}} />
                 </div>
             </div>
             <div className="m-3 level-item">
