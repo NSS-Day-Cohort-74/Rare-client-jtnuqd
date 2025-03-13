@@ -11,9 +11,6 @@ export const AllPosts = () => {
     const [selectedTag, setSelectedTag] = useState("")
     const [postTags, setAllPostTags] = useState([])
     const [searchQuery, setSearchQuery] = useState("")
-    const [allTags, setAllTags] = useState([])
-    const [selectedTag, setSelectedTag] = useState("")
-    const [postTags, setAllPostTags] = useState([])
     const [error, setError] = useState(null)
 
     useEffect(()=> {
