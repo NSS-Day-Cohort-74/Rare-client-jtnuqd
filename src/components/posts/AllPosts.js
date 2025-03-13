@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAllAuthors } from "../services/postService";
+import { getAllAuthors } from "../../services/postService";
 
 export const AllPosts = () => {
   const [allPosts, setAllPosts] = useState([]);
