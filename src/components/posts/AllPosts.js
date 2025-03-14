@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
-
-
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { getAllAuthors } from "../../services/postService";
 
 export const AllPosts = () => {
     const [allPosts, setAllPosts] = useState([])
@@ -13,12 +12,17 @@ export const AllPosts = () => {
     const [searchQuery, setSearchQuery] = useState("")
     const [error, setError] = useState(null)
 
-    useEffect(()=> {
-        fetch("http://localhost:8088/posts")
-            .then(response => response.json())
-            .then(data => setAllPosts(data))
-            .catch(error => console.error("Error with fetching posts", error))
-    }, [])
+  // Fetch posts, filtering by author if selected
+  useEffect(() => {
+    fetch(
+      `http://localhost:8088/posts${
+        selectedAuthor ? `?user_id=${selectedAuthor}` : ""
+      }`
+    )
+      .then((response) => response.json())
+      .then((data) => setAllPosts(data))
+      .catch((error) => console.error("Error fetching posts", error));
+  }, [selectedAuthor]);
 
     useEffect(()=> {
         fetch("http://localhost:8088/categories")
@@ -110,11 +114,17 @@ export const AllPosts = () => {
                     <td className=""><Link to={`/users/${post.user_id}`}>{post.first_name} {post.last_name}</Link></td>
                     <td className="">{post.category_label}</td>
                 </tr>
-            })}
-            </tbody>
-            </table>
-            </div>
-        </section>
-    )
-}
-
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3" className="has-text-centered">
+                  No posts found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+};
