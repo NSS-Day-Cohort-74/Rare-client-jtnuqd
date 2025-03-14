@@ -27,13 +27,14 @@ export const getPostById = (id) => {
 };
 
 export const updateEditedPost = async (post, postId) => {
-  await fetch(`http://localhost:8088/posts/${postId}`, {
+  const response = await fetch(`http://localhost:8088/posts/${postId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(post),
   });
+  return response.ok;
 };
 
 export const deletePostByPostId = async (postId) => {
